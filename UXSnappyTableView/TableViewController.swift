@@ -22,43 +22,43 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
-        let totalContentHeight = tableView.rowHeight * CGFloat(tableView.numberOfRowsInSection(0))
+        let totalContentHeight = tableView.rowHeight * CGFloat(tableView.numberOfRows(inSection: 0))
         
         // set the contentsize to full frame height
-        tableView.contentSize = CGSize(width: tableView.frame.width, height: totalContentHeight)
+        self.tableView.contentSize = CGSize(width: tableView.frame.width, height: totalContentHeight)
     }
     
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 16
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! TableViewCell
         
         return cell
-        
     }
     
     // MARK: - Controls snapping at bottom
-    override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         // threshold beyond bottom that reacts to snap
         let snapThreshold:CGFloat = 50
         
-        if !expandedView && scrollView.contentOffset.y > (tableView.contentSize.height-self.view.frame.height)+snapThreshold {
+        if !expandedView && scrollView.contentOffset.y > (tableView.contentSize.height - self.view.frame.height) + snapThreshold {
             
             // toggle expanded list
             expandedView = true
             
-            tableView.contentSize = CGSize(width: tableView.contentSize.width, height: tableView.contentSize.height + containerView.frame.height)
+            // expand contentsize
+            self.tableView.contentSize = CGSize(width: tableView.contentSize.width, height: tableView.contentSize.height + containerView.frame.height)
         }
     }
 }
